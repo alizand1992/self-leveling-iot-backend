@@ -1,7 +1,16 @@
 language: ruby
+
 rvm:
   - 2.6.6
 
-script:
-  - bundle exec rspec
-  - bundle exec rubocop
+branches:
+  only:
+    - master
+    - /SB-\d*-/
+
+jobs:
+  include:
+    - name: "Test"
+      script: bundle exec rspec
+    - name: "Rubocop"
+      script: bundle exec rubocop
