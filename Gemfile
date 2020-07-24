@@ -5,18 +5,18 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.0'
 
-gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
-gem 'sqlite3', '~> 1.4'
-gem 'puma', '~> 4.1'
-gem 'webpacker', '~> 4.0'
-gem 'jbuilder', '~> 2.7'
+gem 'rails', '6.0.3'
+gem 'sqlite3', '1.4.2'
+gem 'puma', '4.3.5'
+gem 'webpacker', '5.1.1'
+gem 'jbuilder', '2.10.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '6.1.0'
   gem 'rspec-rails', '~> 3.5'
-  gem 'rubocop-rails'
+  gem 'rubocop-rails', '2.7.0'
 end
 
 group :development do
@@ -28,9 +28,8 @@ end
 
 group :test do
   gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
   gem 'webdrivers'
 end
 
-gem 'devise'
-gem 'devise-jwt', '~> 0.5.9'
+gem 'devise', '4.7.2'
+gem 'devise-jwt', '0.8.0'
