@@ -1,7 +1,7 @@
 require: rubocop-rails
 
 Layout/LineLength:
-  Max: 120
+  Max: 150
 
 Documentation:
   Enabled: false
@@ -34,4 +34,10 @@ Style/HashTransformValues:
   Enabled: false
 
 Style/IfUnlessModifier:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/MethodLength:
   Enabled: false
