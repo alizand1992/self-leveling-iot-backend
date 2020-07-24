@@ -6,7 +6,6 @@ rvm:
 branches:
   only:
     - master
-    - /SB-\d*-/
 
 jobs:
   include:
