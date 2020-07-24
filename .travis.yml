@@ -1,12 +1,13 @@
 language: ruby
 
+dist: bionic
+
 rvm:
-  - 2.6.6
+  - 2.7.0
 
 branches:
   only:
     - master
-    - /SB-\d*-/
 
 jobs:
   include:
