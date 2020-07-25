@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_24_045210) do
+ActiveRecord::Schema.define(version: 2020_07_25_013242) do
 
   create_table "allowlisted_jwts", force: :cascade do |t|
     t.string "jti", null: false
@@ -21,6 +21,26 @@ ActiveRecord::Schema.define(version: 2020_07_24_045210) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["jti"], name: "index_allowlisted_jwts_on_jti", unique: true
     t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "notification_id"
+    t.text "text", null: false
+    t.integer "status", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["notification_id"], name: "index_messages_on_notification_id"
+    t.index ["status"], name: "index_messages_on_status"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "name", null: false
+    t.text "description", default: "", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_notifications_on_name"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,4 +63,6 @@ ActiveRecord::Schema.define(version: 2020_07_24_045210) do
   end
 
   add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
+  add_foreign_key "messages", "notifications", on_delete: :cascade
+  add_foreign_key "notifications", "users", on_delete: :cascade
 end
