@@ -24,7 +24,8 @@ module SelfLevelingIotBackend
         resource(
           '*',
           headers: :any,
-          methods: %i[get patch put delete post options]
+          methods: %i[get patch put delete post options],
+          expose: [:authorization]
         )
       end
     end
