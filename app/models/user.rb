@@ -7,6 +7,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :timeoutable, :trackable,
          :jwt_authenticatable, jwt_revocation_strategy: AllowlistedJwt
 
+  has_many :notifications, dependent: :destroy
+
   def allowlisted_jwts
     AllowlistedJwt
   end
