@@ -9,5 +9,8 @@ class CreateNotifications < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+
+    add_foreign_key :notifications, :users, on_delete: :cascade
+    add_index :notifications, :name
   end
 end

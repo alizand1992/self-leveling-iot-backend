@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2020_07_24_224208) do
     t.text "description", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_notifications_on_name"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -52,4 +53,5 @@ ActiveRecord::Schema.define(version: 2020_07_24_224208) do
   end
 
   add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
+  add_foreign_key "notifications", "users", on_delete: :cascade
 end
