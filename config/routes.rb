@@ -6,4 +6,6 @@ Rails.application.routes.draw do
 
   resources :application, only: :index
   post '/user/get_data', to: 'application#user_data'
+
+  resources :notifications, only: :create
 end
