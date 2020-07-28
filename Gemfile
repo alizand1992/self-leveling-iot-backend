@@ -33,3 +33,5 @@ end
 
 gem 'devise', '4.7.2'
 gem 'devise-jwt', '0.8.0'
+
+gem 'rack-cors', '1.1.1'

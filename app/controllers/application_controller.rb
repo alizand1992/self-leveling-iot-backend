@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  protect_from_forgery
   respond_to :json
+  include ActionController::MimeResponds
 
-  before_action :configure_permitted_parameters, if: :devise_controller?
+  protect_from_forgery
+
+  before_action :configure_permitted_parameters, if: :devise_controller?, only: [:create]
 
   def index
     render json: { authenticity_token: form_authenticity_token }, success: :ok
