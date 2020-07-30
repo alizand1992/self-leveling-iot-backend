@@ -1,19 +1,18 @@
+# frozen_string_literal: true
 
-class NotificationsController < ActionController::Base
-  respond_to :json
-  include NotificationsController::MimeResponds
-
-  protect_from_forgery
-
-  before_action :configure_permitted_parameters, if: :devise_controller?, only: [:create]
+class NotificationsController < CreateNotifications::Base
+  before_action :authenticate_user!, only: [:create]
 
   def create
-    render json: { authenticity_token: form_authenticity_token }, success: :ok
+    notification = Notification.new(notificaiton_params)
+    notification.save!
+
+    render json: { id: notification.id }, status: :ok
   end
 
   private
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name])
+  def notification_params
+    params.require(:notification).permit(:name, :description)
   end
 end
