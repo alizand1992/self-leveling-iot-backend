@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NotificationsController < CreateNotifications::Base
+class NotificationsController < ApplicationController
   before_action :authenticate_user!, only: [:create]
 
   def create
