@@ -39,3 +39,5 @@ yarn-debug.log*
 /config/credentials/development.key
 
 .idea/*
+
+*.iml
