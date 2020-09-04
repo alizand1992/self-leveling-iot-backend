@@ -18,4 +18,3 @@ class NotificationsController < ApplicationController
     params.permit(:name, :description)
   end
 end
-
