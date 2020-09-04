@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe ApplicationController do
   describe 'POST user_data' do
     let(:user) { create(:user) }
