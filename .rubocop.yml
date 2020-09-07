@@ -41,3 +41,14 @@ Metrics/AbcSize:
 
 Metrics/MethodLength:
   Enabled: false
+
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'test/**/*.rb'
+    - 'spec/**/*.rb'
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
