@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe NotificationsController do
-  describe 'POST Create' do
+  describe 'POST create' do
     describe 'user logged in' do
       let(:user) { create(:user) }
       let(:params) do
@@ -18,6 +18,7 @@ RSpec.describe NotificationsController do
 
       it 'creates returns a :ok status' do
         post :create, params: params
+
         expect(response.status).to eq(200)
       end
 
@@ -49,6 +50,39 @@ RSpec.describe NotificationsController do
         post :create, params: params
 
         expect(notification['description']).to eq(params[:description])
+      end
+    end
+  end
+
+  describe 'GET index' do
+    let(:user) { create(:user) }
+    let!(:notification) { create(:notification, user_id: user.id) }
+
+    context 'user logged in' do
+      let(:res) { JSON.parse(response.body)['notifications'].to_json }
+
+      before do
+        sign_in user
+      end
+
+      it 'gets the notification from the database' do
+        get :index
+
+        expect(res).to eq([notification].to_json)
+      end
+    end
+
+    context 'user is not logged in' do
+      before do
+        allow_any_instance_of(NotificationsController)
+          .to receive(:authenticate_user!)
+          .and_return(nil)
+      end
+
+      it 'has unauthorized status' do
+        get :index
+
+        expect(response.status).to eq(401)
       end
     end
   end
