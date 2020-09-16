@@ -15,7 +15,7 @@ class NotificationsController < ApplicationController
 
   def create
     notification = Notification.new(notification_params)
-    notification.user = current_user
+    notification.user_id = current_user.id
 
     notification.save!
 
