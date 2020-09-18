@@ -4,4 +4,8 @@ class Notification < ApplicationRecord
   belongs_to :user
 
   has_many :messages, dependent: :destroy
+
+  def belongs_to_user(user)
+    self.user_id == user.id
+  end
 end
