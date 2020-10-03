@@ -27,7 +27,7 @@ class NotificationsController < ApplicationController
       notification = Notification.find(params[:id])
 
       if !notification.belongs_to_user(current_user)
-        render json: { error: 'You do not have correct permissions' }, status: :unauthorized
+        render json: { error: User::MISSING_PERMISSION_MSG }, status: :unauthorized
       else
         render json: {
           notification: {
@@ -37,7 +37,7 @@ class NotificationsController < ApplicationController
         }, status: :ok
       end
     else
-      render json: { error: 'User needs to be logged in' }, status: :unauthorized
+      render json: { error: User::NEEDS_TO_BE_LOGGED_IN_MSG }, status: :unauthorized
     end
   end
 
