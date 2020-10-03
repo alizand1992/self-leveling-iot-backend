@@ -9,6 +9,9 @@ class User < ApplicationRecord
 
   has_many :notifications, dependent: :destroy
 
+  NEEDS_TO_BE_LOGGED_IN_MSG = 'User needs to be logged in'
+  MISSING_PERMISSION_MSG = 'You do not have correct permissions'
+
   def allowlisted_jwts
     AllowlistedJwt
   end

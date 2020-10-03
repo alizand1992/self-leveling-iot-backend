@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_03_134811) do
+ActiveRecord::Schema.define(version: 2020_10_03_142816) do
 
   create_table "allowlisted_jwts", force: :cascade do |t|
     t.string "jti", null: false
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_134811) do
   create_table "triggers", force: :cascade do |t|
     t.string "aws_column", null: false
     t.string "relationship", null: false
-    t.string "type", null: false
+    t.string "trigger_type", null: false
     t.string "value", null: false
     t.integer "notification_id"
     t.datetime "created_at", precision: 6, null: false

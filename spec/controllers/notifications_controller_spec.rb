@@ -2,7 +2,7 @@
 
 RSpec.describe NotificationsController do
   describe 'POST create' do
-    describe 'user logged in' do
+    context 'user logged in' do
       let(:user) { create(:user) }
       let(:params) do
         {
