@@ -132,4 +132,15 @@ RSpec.describe TriggersController do
       end
     end
   end
+
+  describe 'GET attributes' do
+    let(:attributes) { JSON.parse(response.body)['attributes'] }
+    let(:expected) { Trigger::ATTRIBUTES.deep_stringify_keys }
+
+    it 'returns the attribute constant from trigger model' do
+      get :attributes
+
+      expect(attributes).to eq(expected)
+    end
+  end
 end
