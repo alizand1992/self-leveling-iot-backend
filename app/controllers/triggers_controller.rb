@@ -18,6 +18,10 @@ class TriggersController < ApplicationController
     render json: { success: :ok }, status: :ok
   end
 
+  def attributes
+    render json: { attributes: Trigger::ATTRIBUTES }, status: :ok
+  end
+
   private
 
   def trigger_params
