@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   post '/user/get_data', to: 'application#user_data'
 
   resources :notifications, only: %i[create index show update]
-  resources :triggers, only: %i[create]
+  resources :triggers, only: %i[create index]
 end
