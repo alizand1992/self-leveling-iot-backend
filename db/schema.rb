@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_03_142816) do
+ActiveRecord::Schema.define(version: 2020_10_19_175411) do
 
   create_table "allowlisted_jwts", force: :cascade do |t|
     t.string "jti", null: false
@@ -21,6 +21,17 @@ ActiveRecord::Schema.define(version: 2020_10_03_142816) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["jti"], name: "index_allowlisted_jwts_on_jti", unique: true
     t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
+  end
+
+  create_table "devices", force: :cascade do |t|
+    t.text "aws_device_id", null: false
+    t.string "device_name", default: "", null: false
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["aws_device_id", "user_id"], name: "index_devices_on_aws_device_id_and_user_id", unique: true
+    t.index ["aws_device_id"], name: "index_devices_on_aws_device_id", unique: true
+    t.index ["user_id"], name: "index_devices_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|

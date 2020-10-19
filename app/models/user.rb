@@ -8,6 +8,7 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: AllowlistedJwt
 
   has_many :notifications, dependent: :destroy
+  has_many :devices, dependent: :nullify
 
   NEEDS_TO_BE_LOGGED_IN_MSG = 'User needs to be logged in'
   MISSING_PERMISSION_MSG = 'You do not have correct permissions'
