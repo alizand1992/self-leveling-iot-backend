@@ -9,5 +9,5 @@ Rails.application.routes.draw do
 
   resources :notifications, only: %i[create index show update]
   resources :triggers, only: %i[create index]
-  get '/trigger/attributes', to: 'triggers#attributes'
+  get '/triggers/attributes', to: 'triggers#attributes'
 end
