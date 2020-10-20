@@ -16,7 +16,7 @@ class Device < ApplicationRecord
     request = Net::HTTP::Get.new(uri.path)
     response = http.request(request)
     code = JSON.parse(response.code)
-    raise Exception.new('There was an error syncing devices') if code != 200
+    raise StandardError.new(SYNC_ERROR) if code != 200
 
     items = JSON.parse(response.body)
 
