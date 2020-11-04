@@ -6,6 +6,7 @@ class Device < ApplicationRecord
   belongs_to :user, optional: true
 
   SYNC_ERROR = 'There was an error syncing devices'
+  DEVICE_NOT_FOUND = 'Could not find a device with that ID.'
 
   def self.sync_with_aws
     uri = URI.parse('https://2v0ejsryj6.execute-api.us-west-1.amazonaws.com/devices/all123')
