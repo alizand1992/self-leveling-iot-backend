@@ -22,6 +22,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def check_user_logged_in!
+    raise SecurityError.new(User::NEEDS_TO_BE_LOGGED_IN_MSG) if current_user.blank?
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name])
   end

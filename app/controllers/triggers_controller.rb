@@ -28,10 +28,6 @@ class TriggersController < ApplicationController
     params.permit(:aws_column, :relationship, :trigger_type, :value, :notification_id)
   end
 
-  def check_user_logged_in!
-    raise SecurityError.new(User::NEEDS_TO_BE_LOGGED_IN_MSG) if current_user.blank?
-  end
-
   def check_notification_owner!
     notification = Notification.find(params[:notification_id])
 

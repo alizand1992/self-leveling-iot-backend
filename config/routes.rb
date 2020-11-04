@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   resources :triggers, only: %i[create index]
   get '/triggers/attributes', to: 'triggers#attributes'
 
+  post '/devices/register', to: 'devices#register'
   get '/devices/sync', to: 'devices#sync'
 end
