@@ -3,6 +3,64 @@
 require 'rails_helper'
 
 RSpec.describe DevicesController, type: :controller do
+  describe 'GET#index' do
+    let(:res) { JSON.parse(response.body) }
+
+    context 'No devices at all' do
+      before do
+        get :index
+      end
+
+      it 'returns a 200 status' do
+        expect(response.status).to eq 200
+      end
+
+      it 'renders devices as an empty array' do
+        expect(res['devices']).to eq []
+      end
+    end
+
+    context 'all devices already registered' do
+      before do
+        (0..5).to_a.each do |_i|
+          create(:registered_device)
+        end
+
+        get :index
+      end
+
+      it 'returns a 200 status' do
+        expect(response.status).to eq 200
+      end
+
+      it 'renders devices as an empty array' do
+        expect(res['devices']).to eq []
+      end
+    end
+
+    context 'some devices are registered and some aren\'t' do
+      before do
+        (0..5).to_a.each do |index|
+          if index % 2 == 0
+            create(:registered_device)
+          else
+            create(:unregistered_device)
+          end
+        end
+
+        get :index
+      end
+
+      it 'returns a 200 status' do
+        expect(response.status).to eq 200
+      end
+
+      it 'render the right number of devices' do
+        expect(res['devices'].size).to eq 3
+      end
+    end
+  end
+
   describe 'GET#sync' do
     let(:res) { JSON.parse(response.body) }
 

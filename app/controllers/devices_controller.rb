@@ -2,6 +2,18 @@ class DevicesController < ApplicationController
   before_action :authenticate_user!, only: %i[register]
   before_action :check_user_logged_in!, only: %i[register]
 
+  def index
+    devices = Device.where(user_id: nil)
+    devices = devices.map do |device |
+      {
+        aws_device_id: device.aws_device_id,
+        device_name: device.device_name,
+      }
+    end
+
+    render json: { devices: devices }.to_json, status: :ok
+  end
+
   def sync
     Device.sync_with_aws
     render json: { success: :ok }, status: :ok
