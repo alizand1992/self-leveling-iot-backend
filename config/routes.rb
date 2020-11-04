@@ -10,4 +10,9 @@ Rails.application.routes.draw do
   resources :notifications, only: %i[create index show update]
   resources :triggers, only: %i[create index]
   get '/triggers/attributes', to: 'triggers#attributes'
+
+  resources :devices, only: %i[index]
+  post '/devices/register', to: 'devices#register'
+  patch '/devices/unregister', to: 'devices#unregister'
+  get '/devices/sync', to: 'devices#sync'
 end

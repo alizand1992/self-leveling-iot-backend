@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_19_175411) do
+ActiveRecord::Schema.define(version: 2020_11_04_002242) do
 
   create_table "allowlisted_jwts", force: :cascade do |t|
     t.string "jti", null: false
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2020_10_19_175411) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "password"
     t.index ["aws_device_id", "user_id"], name: "index_devices_on_aws_device_id_and_user_id", unique: true
     t.index ["aws_device_id"], name: "index_devices_on_aws_device_id", unique: true
     t.index ["user_id"], name: "index_devices_on_user_id"
