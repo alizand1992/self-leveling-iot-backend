@@ -196,4 +196,53 @@ RSpec.describe DevicesController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH#unregister' do
+    let(:res) { JSON.parse(response.body) }
+
+    context 'device belongs to user' do
+      let(:user) { create(:user) }
+      let!(:device) { create(:registered_device, user_id: user.id) }
+
+      before do
+        sign_in user
+        patch :unregister, params: { aws_device_id: device.aws_device_id }
+      end
+
+      it 'returns status 200' do
+        expect(response.status).to eq 200
+      end
+
+      it 'returns a success ok' do
+        expect(res['success']).to eq 'ok'
+      end
+
+      it 'unregisters the device' do
+        expect(Device.find(device.id).user_id).to eq nil
+      end
+    end
+
+    context 'device does not belong to the user' do
+      let(:user1) { create(:user) }
+      let(:user2) { create(:user) }
+      let!(:device) { create(:registered_device, user_id: user1.id) }
+
+      before do
+        sign_in user2
+        patch :unregister, params: { aws_device_id: device.aws_device_id }
+      end
+
+      it 'returns status 200' do
+        expect(response.status).to eq 400
+      end
+
+      it 'returns a success ok' do
+        expect(res['error']).to eq Device::DEVICE_NOT_FOUND
+      end
+
+      it 'unregisters the device' do
+        expect(Device.find(device.id).user_id).to eq user1.id
+      end
+    end
+  end
 end
