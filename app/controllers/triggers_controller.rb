@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class TriggersController < ApplicationController
-  before_action :authenticate_user!, only: %i[index create]
-  before_action :check_user_logged_in!, only: %i[index create]
-  before_action :check_notification_owner!, only: %i[index create]
+  before_action :authenticate_user!, only: %i[index create update destroy]
+  before_action :check_user_logged_in!, only: %i[index create update destroy]
+  before_action :check_notification_owner!, only: %i[index create update destroy]
 
   def index
     triggers = Trigger.where notification_id: params[:notification_id]
@@ -14,6 +14,19 @@ class TriggersController < ApplicationController
   def create
     trigger = Trigger.new(trigger_params)
     trigger.save!
+
+    render json: { success: :ok }, status: :ok
+  end
+
+  def update
+    trigger = Trigger.find(params[:id])
+    trigger.update(trigger_params)
+
+    render json: { success: :ok }, status: :ok
+  end
+
+  def destroy
+    Trigger.destroy(params[:id])
 
     render json: { success: :ok }, status: :ok
   end
