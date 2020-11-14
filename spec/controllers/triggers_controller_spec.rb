@@ -166,6 +166,30 @@ RSpec.describe TriggersController do
     end
   end
 
+  describe 'DELETE destroy' do
+    let(:user) { create(:user) }
+    let(:params) {{ id: trigger.id, notification_id: notification.id }}
+
+    let(:notification) { create(:notification, user: user) }
+    let(:trigger) { create(:trigger, notification: notification) }
+
+    before do
+      sign_in user
+    end
+
+    it 'responses with a 200' do
+      delete :destroy, params: params
+
+      expect(response.status).to eq(200)
+    end
+
+    it 'deletes the record from db' do
+      delete :destroy, params: params
+
+      expect{ Trigger.find(trigger.id) }.to raise_exception(ActiveRecord::RecordNotFound)
+    end
+  end
+
   describe 'GET attributes' do
     let(:attributes) { JSON.parse(response.body)['attributes'] }
     let(:expected) { Trigger::ATTRIBUTES.deep_stringify_keys }
