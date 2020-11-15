@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get '/triggers/attributes', to: 'triggers#attributes'
 
   resources :devices, only: %i[index]
+  get '/devices/registered_devices', to: 'devices#registered_devices'
   post '/devices/register', to: 'devices#register'
   patch '/devices/unregister', to: 'devices#unregister'
   get '/devices/sync', to: 'devices#sync'

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Device, type: :model do
-  describe '#sync_with_aws' do
+  describe '.sync_with_aws' do
     subject { described_class.sync_with_aws }
 
     context 'fails to make a connection' do
@@ -92,6 +92,55 @@ RSpec.describe Device, type: :model do
           old_device = Device.where(aws_device_id: old_id).first
           subject
           expect(Device.where(aws_device_id: old_id).first).to eq old_device
+        end
+      end
+    end
+  end
+
+  describe '.user_devices' do
+    subject { Device.user_devices(user_id) }
+
+    let(:user) { create(:user) }
+    let(:user_id) { nil }
+    let!(:device_1) { create(:registered_device, user: user) }
+    let!(:device_2) { create(:registered_device, user: user) }
+    let!(:device_3) { create(:unregistered_device) }
+
+    it 'returns an array' do
+      expect(subject).to be_kind_of(Array)
+    end
+
+    context 'user_id is null (unregistered devices)' do
+      it 'returns the right number of devices' do
+        expect(subject.size).to eq 1
+      end
+
+      it 'returns the right device' do
+        expect(subject.first[:aws_device_id]).to eq device_3.aws_device_id
+      end
+    end
+
+    context 'user_id is not null (registered devices)' do
+      context 'devices belong to this user' do
+        let(:user_id) { user.id }
+
+        it 'returns the right number of devices' do
+          expect(subject.size).to eq 2
+        end
+
+        it 'returns the right devices' do
+          aws_device_ids = subject.map { |device| device[:aws_device_id] }
+
+          expect(aws_device_ids).to include device_1.aws_device_id
+          expect(aws_device_ids).to include device_2.aws_device_id
+        end
+      end
+
+      context 'devices do not belong to this user' do
+        let(:user_id) { user.id + 1 }
+
+        it 'returns the right number of devices' do
+          expect(subject.size).to eq 0
         end
       end
     end

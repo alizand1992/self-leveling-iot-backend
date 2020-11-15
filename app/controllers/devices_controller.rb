@@ -1,17 +1,15 @@
+# frozen_string_literal: true
+
 class DevicesController < ApplicationController
-  before_action :authenticate_user!, only: %i[register unregister]
-  before_action :check_user_logged_in!, only: %i[register unregister]
+  before_action :authenticate_user!, only: %i[register unregister registered_devices]
+  before_action :check_user_logged_in!, only: %i[register unregister registered_devices]
 
   def index
-    devices = Device.where(user_id: nil)
-    devices = devices.map do |device |
-      {
-        aws_device_id: device.aws_device_id,
-        device_name: device.device_name,
-      }
-    end
+   render json: { devices: Device.user_devices() }.to_json, status: :ok
+  end
 
-    render json: { devices: devices }.to_json, status: :ok
+  def registered_devices
+    render json: { devices: Device.user_devices(current_user.id) }.to_json, status: :ok
   end
 
   def sync
@@ -60,8 +58,7 @@ class DevicesController < ApplicationController
     @register_params ||=
       begin
         params.require(:aws_device_id)
-        params.require(:device_name)
-        params.permit(:aws_device_id, :device_name)
+        params.permit(%i[aws_device_id device_name])
       end
   end
 end
