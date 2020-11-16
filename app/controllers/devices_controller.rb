@@ -58,6 +58,7 @@ class DevicesController < ApplicationController
     @register_params ||=
       begin
         params.require(:aws_device_id)
+        params.require(:device_name)
         params.permit(%i[aws_device_id device_name])
       end
   end
