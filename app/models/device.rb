@@ -30,4 +30,14 @@ class Device < ApplicationRecord
 
     self.create!(devices)
   end
+
+  def self.user_devices(user_id = nil)
+    where(user_id: user_id).map do |device|
+      {
+        aws_device_id: device.aws_device_id,
+        device_name: device.device_name,
+        user_id: user_id,
+      }
+    end
+  end
 end

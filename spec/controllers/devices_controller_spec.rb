@@ -61,6 +61,24 @@ RSpec.describe DevicesController, type: :controller do
     end
   end
 
+  describe 'GET#registered_devices' do
+    let(:res) { JSON.parse(response.body) }
+    let(:user) { create(:user) }
+
+    before do
+      sign_in user
+      get :registered_devices
+    end
+
+    it 'returns a 200 status' do
+      expect(response.status).to eq 200
+    end
+
+    it 'renders devices as an empty array' do
+      expect(res['devices']).to eq []
+    end
+  end
+
   describe 'GET#sync' do
     let(:res) { JSON.parse(response.body) }
 
