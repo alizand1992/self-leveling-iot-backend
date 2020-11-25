@@ -1,8 +1,16 @@
 # frozen_string_literal: true
 
 class DevicesController < ApplicationController
-  before_action :authenticate_user!, only: %i[register unregister registered_devices]
-  before_action :check_user_logged_in!, only: %i[register unregister registered_devices]
+  before_action :authenticate_user!,
+    only: %i[
+      register unregister registered_devices
+      registered_devices_with_details
+    ]
+  before_action :check_user_logged_in!,
+    only: %i[
+      register unregister registered_devices
+      registered_devices_with_details
+    ]
 
   def index
    render json: { devices: Device.user_devices() }.to_json, status: :ok
@@ -10,6 +18,22 @@ class DevicesController < ApplicationController
 
   def registered_devices
     render json: { devices: Device.user_devices(current_user.id) }.to_json, status: :ok
+  end
+
+  def issue_command
+    Device.issue_command({
+      id: params[:aws_device_id],
+      command: params[:command],
+    })
+
+    render json: { success: :ok }.to_json, status: :ok
+  end
+
+  def registered_devices_with_details
+    devices = Device.user_devices(current_user.id)
+    devices = Device.devices_with_details(devices)
+
+    render json: { devices: devices }.to_json, status: :ok
   end
 
   def sync

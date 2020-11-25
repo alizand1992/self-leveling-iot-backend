@@ -13,7 +13,9 @@ Rails.application.routes.draw do
 
   resources :devices, only: %i[index]
   get '/devices/registered_devices', to: 'devices#registered_devices'
+  get '/devices/registered_devices_with_details', to: 'devices#registered_devices_with_details'
   post '/devices/register', to: 'devices#register'
+  post '/devices/issue_command', to: 'devices#issue_command'
   patch '/devices/unregister', to: 'devices#unregister'
   get '/devices/sync', to: 'devices#sync'
 end
