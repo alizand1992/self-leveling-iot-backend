@@ -42,7 +42,43 @@ RSpec.describe Device, type: :model do
 
         def initialize
           @code = '200'
-          @body = "[{\"healthy\":{\"BOOL\":true},\"password\":{\"S\":\"03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4\"},\"id\":{\"S\":\"e750ec0f-00a8-44d5-8881-c4edd52fb6ab\"},\"level\":{\"BOOL\":true},\"battery\":{\"N\":\"80.5\"}}, {\"healthy\":{\"BOOL\":true},\"password\":{\"S\":\"03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4\"},\"id\":{\"S\":\"e750ec0f-00a8-44d5-8881-c4edd52fb6ac\"},\"level\":{\"BOOL\":true},\"battery\":{\"N\":\"80.5\"}}]"
+          temp = [{
+              healthy: {
+                BOOL: true
+              },
+              password: {
+                S: "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"
+              },
+              id: {
+                S: "e750ec0f-00a8-44d5-8881-c4edd52fb6ab"
+              },
+              level: {
+                BOOL: true
+              },battery: {
+                N: 80.5
+              }
+              },
+            {
+              healthy: {
+                BOOL: true
+              },
+              password: {
+                S: "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"
+              },
+              id: {
+                S: "e750ec0f-00a8-44d5-8881-c4edd52fb6ac"
+              },
+              level: {
+                BOOL: true
+              },battery: {
+                N: 80.5
+              }
+            }]
+
+          temp = {
+            body: temp.to_json
+          }.to_json
+          @body = temp
         end
       end
 
